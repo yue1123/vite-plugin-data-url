@@ -5,33 +5,32 @@
   defineProps<{ msg: string }>()
 
   const count = ref(0)
-  function base64ToBlob(base64String: string) {
-    const mimeMatch = base64String.match(/^data:(.*);base64,/)
-    const contentType = mimeMatch ? mimeMatch[1] : ''
-    console.log(contentType)
-    const bytes = new Uint8Array(base64String.length)
-    for (let i = 0; i < base64String.length; i++) {
-      bytes[i] = base64String.charCodeAt(i)
+  function base64ToBlob(base64Data: string) {
+    let arr = base64Data.split(','),
+      fileType = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      l = bstr.length,
+      u8Arr = new Uint8Array(l)
+
+    while (l--) {
+      u8Arr[l] = bstr.charCodeAt(l)
     }
-    // const decoder = new TextDecoder('utf-8')
-    // const decodedData = decoder.decode(bytes)
-    // const mimeMatch = decodedData.match(/^data:(.*);base64,/)
-    // const contentType = mimeMatch ? mimeMatch[1] : ''
-    // const blob = new Blob([bytes], { type: 'text/plain' })
-    return blob
+    return new Blob([u8Arr], {
+      type: fileType
+    })
   }
   function blobToUrl(blob) {
     const url = URL.createObjectURL(blob)
     return url
   }
-  const blobUrl = blobToUrl(base64ToBlob(base64Img))
-  console.log(blobUrl)
+  const a = blobToUrl(base64ToBlob(base64Img))
+  const show = ref(false)
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
+  <h1 @click="show = !show">{{ msg }}</h1>
 
-  <img :src="blobUrl" alt="" />
+  <img v-if="show" :src="base64Img" alt="" />
   <hr />
   <textarea disabled rows="10" :cols="40">
     {{ base64Img }}
