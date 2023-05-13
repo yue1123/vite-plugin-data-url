@@ -31,6 +31,18 @@ export default {
 }
 ```
 
+## Typescript 
+
+Add types for `?base64`
+```json
+"complierOptions":{
+  // ...
+  "types": ["vite-plugin-base64-import/types"]
+  // ...
+}
+
+```
+
 ## API
 
 ### Base64ImportOptions

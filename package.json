@@ -1,9 +1,9 @@
 {
   "name": "vite-plugin-base64-import",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Encoding img to base64 with base64 import query",
   "main": "dist/index.js",
-  "types": "dist/types.d.ts",
+  "types": "dist/index.d.ts",
   "module": "dist/index.js",
   "scripts": {
     "dev": "pnpm clean && tsup src/index.ts  --watch --dts --format cjs",
