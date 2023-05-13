@@ -4,33 +4,10 @@
 
   defineProps<{ msg: string }>()
 
-  const count = ref(0)
-  function base64ToBlob(base64Data: string) {
-    let arr = base64Data.split(','),
-      fileType = arr[0].match(/:(.*?);/)[1],
-      bstr = atob(arr[1]),
-      l = bstr.length,
-      u8Arr = new Uint8Array(l)
-
-    while (l--) {
-      u8Arr[l] = bstr.charCodeAt(l)
-    }
-    return new Blob([u8Arr], {
-      type: fileType
-    })
-  }
-  function blobToUrl(blob) {
-    const url = URL.createObjectURL(blob)
-    return url
-  }
-  const a = blobToUrl(base64ToBlob(base64Img))
-  const show = ref(false)
 </script>
 
 <template>
-  <h1 @click="show = !show">{{ msg }}</h1>
-
-  <img v-if="show" :src="base64Img" alt="" />
+  <img :src="base64Img" alt="" />
   <hr />
   <textarea disabled rows="10" :cols="40">
     {{ base64Img }}

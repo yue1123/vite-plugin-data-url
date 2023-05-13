@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Encoding img to base64 with base64 import query",
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/types.d.ts",
   "module": "dist/index.js",
   "scripts": {
     "dev": "pnpm clean && tsup src/index.ts  --watch --dts --format cjs",
@@ -15,7 +15,7 @@
     "example:preview": "pnpm run -C example preview"
   },
   "files": [
-    "global.d.ts",
+    "types.d.ts",
     "screenshots",
     "dist"
   ],
