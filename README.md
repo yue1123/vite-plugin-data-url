@@ -24,10 +24,10 @@ Add envParse plugin to vite.config.js / vite.config.ts and configure it:
 
 ```ts
 // vite.config.js / vite.config.ts
-import { envParse } from 'vite-plugin-base64-import'
+import { base64Import } from 'vite-plugin-base64-import'
 
 export default {
-  plugins: [envParse()]
+  plugins: [ base64Import()]
 }
 ```
 
