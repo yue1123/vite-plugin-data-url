@@ -61,11 +61,9 @@ export function base64Import(options: Base64ImportOptions = {}): Plugin {
           }
           return `export default "${data}"`
         } catch (error: any) {
-          console.log(error)
           errorLog(false, error.message || error)
         }
       }
     }
   }
 }
-
