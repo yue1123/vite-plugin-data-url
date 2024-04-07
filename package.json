@@ -1,7 +1,7 @@
 {
   "name": "vite-plugin-data-url-query",
   "version": "1.0.0",
-  "description": "Encoding img to base64 with base64 import query",
+  "description": "Extend vite import query to add data-url import. You can talk about importing the data-url encoding of a resource directly.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "module": "dist/index.js",
