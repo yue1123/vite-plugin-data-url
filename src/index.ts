@@ -1,68 +1,74 @@
 import path from 'node:path'
-import fs from 'node:fs'
-import type { Plugin } from 'vite'
-import base64Img from 'base64-img'
-export interface Base64ImportOptions {
-  /**
-   * Whether to disable the warning when specified files exceed the set size limit.
-   */
-  disableSizeWarning?: boolean
-  /**
-   * 	The maximum file size (in KB) for converting to base64. If exceeded, a warning will be given and the file will be ignored.
-   * @default 512
-   */
-  sizeLimit?: number
-}
+import { type Plugin, ViteDevServer } from 'vite'
+import { Options } from './options'
+import { encodeSVG, getFileSize, readFile } from './utils'
+import { NAME, queryReg } from './constants'
+import mime from 'mime'
 
-function errorLog(isWarn: boolean, content: string) {
-  console.log('\n')
-  console.log(`${isWarn ? '\x1b[33m' : '\x1b[31m'}%s%s\x1b[0m`, `${isWarn ? '⚠️ ' : '✘ '}[base64-import] - `, content)
-  console.log()
-}
-/**
- * 获取文件大小
- * @returns fileSize
- */
-function getFileSize(filePath: string) {
-  const stats = fs.statSync(filePath)
-  if (stats) {
-    return stats.size / 1024
-  }
-  return 0
-}
+export function dataUrlQuery(options: Options = {}): Plugin {
+  const { limit = 10 * 1024, sizeWarning = true } = options
 
-export function base64Import(options: Base64ImportOptions = {}): Plugin {
-  const defaultOptions = {
-    disableSizeWarning: false,
-    sizeLimit: 512
-  }
-  const _options: Required<Base64ImportOptions> = Object.assign(defaultOptions, options)
-  const cache = new Map<string, string>()
   const root = process.cwd()
-  const query = '?base64'
+  const cache = new Map<string, string>()
+  let isDev = false
+  let server: ViteDevServer
   return {
-    name: 'base64-import',
-    transform(_, id) {
-      if (id.includes(query)) {
-        try {
-          let data: string | void = cache.get(id)
-          if (!data) {
-            const filePath = path.resolve(root, id.replace(query, ''))
-            if (getFileSize(filePath) > _options.sizeLimit) {
-              !_options.disableSizeWarning &&
-                errorLog(
-                  true,
-                  `File ${id} is exceed the limit ${_options.sizeLimit}kb, conversion to base64 is not recommended.`
-                )
-              return
+    name: NAME,
+    configResolved(config) {
+      const { command } = config
+      isDev = command === 'serve'
+    },
+    configureServer(_server) {
+      server = _server
+    },
+    async transform(_, id) {
+      if (!queryReg.test(id)) return
+
+      try {
+        const _id = id.replace(queryReg, '')
+        let data: string | void = cache.get(id)
+
+        if (!data) {
+          const filePath = path.resolve(root, _id)
+          const size = await getFileSize(filePath)
+
+          if (size > limit && sizeWarning) {
+            let importerId, fileUrl
+            if (isDev) {
+              const module = server.moduleGraph.getModuleById(id)
+              if (module) {
+                const [first] = module.importers
+                importerId = first.url
+                fileUrl = module.url
+              }
             }
-            data = base64Img.base64Sync(filePath)
-            cache.set(id, data as string)
+
+            return this.warn({
+              id: importerId,
+              message: `File ${fileUrl} size ${size} bytes is exceed the limit ${limit} bytes, too long a data-url will make the generated code too large.`
+            })
           }
-          return `export default "${data}"`
-        } catch (error: any) {
-          errorLog(false, error.message || error)
+          const buffer = await readFile(filePath)
+
+          const mimetype = mime.getType(filePath)
+          const isSVG = mimetype === 'image/svg+xml'
+          const encoding = isSVG ? '' : ';base64'
+
+          data = isSVG ? encodeSVG(buffer) : buffer.toString('base64')
+          data = `data:${mimetype}${encoding},${data}`
         }
+
+        cache.set(id, data as string)
+
+        return {
+          code: `export default "${data}"`,
+          map: null
+        }
+      } catch (error: any) {
+        this.error({
+          stack: error.stack,
+          message: error.message || 'Meet some error'
+        })
       }
     }
   }

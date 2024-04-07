@@ -1,21 +1,21 @@
-# vite-plugin-base64-import
+# vite-plugin-data-url-query
 
-![npm](https://img.shields.io/npm/v/vite-plugin-base64-import?style=flat-square)
-![npm](https://img.shields.io/npm/dm/vite-plugin-base64-import?style=flat-square)
-![GitHub](https://img.shields.io/github/license/yue1123/vite-plugin-base64-import?style=flat-square)
+![npm](https://img.shields.io/npm/v/vite-plugin-data-url-query?style=flat-square)
+![npm](https://img.shields.io/npm/dm/vite-plugin-data-url-query?style=flat-square)
+![GitHub](https://img.shields.io/github/license/yue1123/vite-plugin-data-url-query?style=flat-square)
 
-Encoding img to base64 with base64 import query
+Extend vite import query to add data-url import. You can talk about importing the data-url encoding of a resource directly.
 
 ## 📦 Install
 
 ```shell
-npm i vite-plugin-base64-import -D
+npm i vite-plugin-data-url-query -D
 
 # yarn
-yarn add vite-plugin-base64-import -D
+yarn add vite-plugin-data-url-query -D
 
 # pnpm
-pnpm add vite-plugin-base64-import -D
+pnpm add vite-plugin-data-url-query -D
 ```
 
 ## 🦄 Usage
@@ -24,20 +24,21 @@ Add envParse plugin to vite.config.js / vite.config.ts and configure it:
 
 ```ts
 // vite.config.js / vite.config.ts
-import { base64Import } from 'vite-plugin-base64-import'
+import { dataUrlQuery } from 'vite-plugin-data-url-query'
 
 export default {
-  plugins: [ base64Import()]
+  plugins: [dataUrlQuery()]
 }
 ```
 
-## Typescript 
+## Typescript
 
-Add types for `?base64`
+Add types for `?data-url`
+
 ```json
 "complierOptions":{
   // ...
-  "types": ["vite-plugin-base64-import/types"]
+  "types": ["vite-plugin-data-url-query/types"]
   // ...
 }
 
@@ -47,10 +48,10 @@ Add types for `?base64`
 
 ### Base64ImportOptions
 
-| Property Name      | Type      | Description                                                                                                                | Default Value |
-| ------------------ | --------- | -------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| disableSizeWarning | `boolean` | Whether to disable the warning when specified files exceed the set size limit.                                             |               |
-| sizeLimit          | `number`  | The maximum file size (in KB) for converting to base64. If exceeded, a warning will be given and the file will be ignored. | `512`         |
+| Property Name | Type      | Description                                                                                                                | Default Value |
+| ------------- | --------- | -------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| sizeWarning   | `boolean` | Whether to disable the warning when specified files exceed the set size limit.                                             |  `true`          |
+| limit         | `number`  | The maximum file size (in KB) for converting to base64. If exceeded, a warning will be given and the file will be ignored. | `10 * 1024`   |
 
 ## License
 

@@ -1,4 +1,6 @@
-declare module '*?base64' {
-  const src: string
-  export default src
+type DataUrl = `data:image/${string}`
+const dataUrl: DataUrl
+
+declare module '*?data-url' {
+  export default dataUrl
 }

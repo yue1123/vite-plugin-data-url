@@ -1,13 +1,25 @@
 <script setup lang="ts">
   import { ref } from 'vue'
-  import base64Img from '../assets/44051676621973_.pic.jpg?base64'
+  import base64Img from '../assets/44051676621973_.pic.jpg?data-url'
+  import vite from '../assets/vite.svg?data-url'
 
   defineProps<{ msg: string }>()
 
+  console.log(vite)
+  // import('../assets/44051676621973_.pic.jpg?data-url').then((res) => {
+  //   console.log(res, '========')
+  // })
+  console.log(
+    import.meta.glob('../assets/*.jpg', {
+      eager: true,
+      query: '?data-url'
+    })
+  )
 </script>
 
 <template>
   <img :src="base64Img" alt="" />
+  <img :src="vite" alt="" />
   <hr />
   <textarea disabled rows="10" :cols="40">
     {{ base64Img }}

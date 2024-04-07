@@ -1,7 +1,14 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { base64Import } from 'vite-plugin-base64-import'
+import { dataUrlQuery } from 'vite-plugin-data-url-query'
+import inspect from 'vite-plugin-inspect'
 
 export default defineConfig({
-  plugins: [vue(), base64Import()]
+  plugins: [
+    vue(),
+    dataUrlQuery({
+      limit: 100
+    }),
+    inspect()
+  ]
 })

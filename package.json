@@ -1,13 +1,14 @@
 {
-  "name": "vite-plugin-base64-import",
-  "version": "1.0.1",
+  "name": "vite-plugin-data-url-query",
+  "version": "1.0.0",
   "description": "Encoding img to base64 with base64 import query",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "module": "dist/index.js",
+  "type": "module",
   "scripts": {
-    "dev": "pnpm clean && tsup src/index.ts  --watch --dts --format cjs",
-    "build": "pnpm clean && tsup src/index.ts --dts --env.NODE_ENV production --format cjs && pnpm clean-up",
+    "dev": "pnpm clean && tsup src/index.ts  --watch --dts --format esm",
+    "build": "pnpm clean && tsup src/index.ts --dts --env.NODE_ENV production --format esm && pnpm clean-up",
     "clean": "rimraf dist",
     "clean-up": "rimraf tsconfig.tsbuildinfo",
     "example:dev": "pnpm run -C example dev",
@@ -28,10 +29,12 @@
     "import query",
     "img",
     "image",
+    "data-url",
+    "data-uri",
     "static assets"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/html-minifier": "^4.0.2",
     "@types/node": "^18.15.0",
@@ -46,6 +49,6 @@
     "vite": "*"
   },
   "dependencies": {
-    "base64-img": "^1.0.4"
+    "mime": "^4.0.1"
   }
 }
