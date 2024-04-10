@@ -15,6 +15,6 @@
     "declarationDir": "dist",
     "declaration": true
   },
-  "include": ["*.ts", "*.d.ts"],
+  "include": ["src/*.ts", "src/*.d.ts"],
   "exclude": ["dist", "node_modules", "test", "example"]
 }
