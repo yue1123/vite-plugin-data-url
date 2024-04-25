@@ -1,21 +1,21 @@
-# vite-plugin-data-url-query
+# vite-plugin-data-url
 
 ![npm](https://img.shields.io/npm/v/vite-plugin-data-url-query?style=flat-square)
 ![npm](https://img.shields.io/npm/dm/vite-plugin-data-url-query?style=flat-square)
 ![GitHub](https://img.shields.io/github/license/yue1123/vite-plugin-data-url-query?style=flat-square)
 
-Extend vite import query to add data-url import. You can talk about importing the data-url encoding of a resource directly.
+Add support for data-url query import, you can directly import the data-url address of the image.
 
 ## 📦 Install
 
 ```shell
-npm i vite-plugin-data-url-query -D
+npm i vite-plugin-data-url -D
 
 # yarn
-yarn add vite-plugin-data-url-query -D
+yarn add vite-plugin-data-url -D
 
 # pnpm
-pnpm add vite-plugin-data-url-query -D
+pnpm add vite-plugin-data-url -D
 ```
 
 ## 🦄 Usage
@@ -24,10 +24,10 @@ Add envParse plugin to vite.config.js / vite.config.ts and configure it:
 
 ```ts
 // vite.config.js / vite.config.ts
-import { dataUrlQuery } from 'vite-plugin-data-url-query'
+import { dataUrl } from 'vite-plugin-data-url'
 
 export default {
-  plugins: [dataUrlQuery()]
+  plugins: [dataUrl()]
 }
 ```
 
@@ -38,7 +38,7 @@ Add types for `?data-url`
 ```json
 "complierOptions":{
   // ...
-  "types": ["vite-plugin-data-url-query/types"]
+  "types": ["vite-plugin-data-url/types"]
   // ...
 }
 

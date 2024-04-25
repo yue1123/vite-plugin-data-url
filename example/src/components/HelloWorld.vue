@@ -6,9 +6,9 @@
   defineProps<{ msg: string }>()
 
   console.log(vite)
-  // import('../assets/44051676621973_.pic.jpg?data-url').then((res) => {
-  //   console.log(res, '========')
-  // })
+  import('../assets/44051676621973_.pic.jpg?data-url').then((res) => {
+    console.log(res, '========')
+  })
   console.log(
     import.meta.glob('../assets/*.jpg', {
       eager: true,
@@ -19,10 +19,13 @@
 
 <template>
   <img :src="base64Img" alt="" />
-  <img :src="vite" alt="" />
+  <img :src="vite" style="margin-left: 200px" alt="" />
   <hr />
   <textarea disabled rows="10" :cols="40">
     {{ base64Img }}
+  </textarea>
+  <textarea disabled rows="10" :cols="40">
+    {{ vite }}
   </textarea>
   <!-- <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>

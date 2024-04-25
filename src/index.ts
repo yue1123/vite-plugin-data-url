@@ -5,7 +5,7 @@ import { encodeSVG, getFileSize, readFile } from './utils'
 import { NAME, queryReg } from './constants'
 import mime from 'mime'
 
-export function dataUrlQuery(options: Options = {}): Plugin {
+export function dataUrl(options: Options = {}): Plugin {
   const { limit = 10 * 1024, sizeWarning = true } = options
 
   const root = process.cwd()

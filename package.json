@@ -1,5 +1,5 @@
 {
-  "name": "vite-plugin-data-url-query",
+  "name": "vite-plugin-data-url",
   "version": "1.0.0",
   "description": "Extend vite import query to add data-url import. You can talk about importing the data-url encoding of a resource directly.",
   "main": "dist/index.js",
@@ -17,7 +17,6 @@
   },
   "files": [
     "types.d.ts",
-    "screenshots",
     "dist"
   ],
   "keywords": [
@@ -30,11 +29,16 @@
     "img",
     "image",
     "data-url",
-    "data-uri",
+    "query",
     "static assets"
   ],
-  "author": "",
+  "author": "yue1123",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:yue1123/vite-plugin-data-url.git"
+  },
+  "homepage": "https://github.com/yue1123/vite-plugin-data-url",
   "devDependencies": {
     "@types/html-minifier": "^4.0.2",
     "@types/node": "^18.15.0",
